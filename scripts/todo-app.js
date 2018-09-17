@@ -15,18 +15,50 @@ const todos = [{
     completed: false
 }]
 
-// Summary Message -> You have 2 todos left (p element)
-// Add a p for each todo above (use text value)
+// 1. Setup div to contain todos
+// 2. Setup filters (searchText) and wire up a new filter input to change .
+// 3. Create a renderTodos function to render and rerender the latest filtered data
 
-const incompleteTodos = todos.filter(function(todo){
-    return !todo.completed
+const filters = {
+    searchText: ""
+}
+
+const renderTodos = function(todos, filter){
+    const filteredTodos = todos.filter(function(todo){
+        return todo.text.toLowerCase().includes(filter.searchText.toLowerCase())
+    })
+
+    document.querySelector("#todos").innerHTML = ""
+
+    const incompleteTodos = filteredTodos.filter(function(todo){
+        return !todo.completed
+    })
+    
+    const SummuaryMessage = document.createElement("h2")
+    SummuaryMessage.textContent = `You have ${incompleteTodos.length} todos left.`
+    document.querySelector("#todos").appendChild(SummuaryMessage)
+
+    filteredTodos.forEach(function(todo){
+        let newTodo = document.createElement("p")
+        newTodo.textContent = todo.text
+        document.querySelector("#todos").appendChild(newTodo)
+    })
+
+}
+
+renderTodos(todos, filters)
+
+// Listen for new todo creation
+document.querySelector("#create-todo").addEventListener("click", function(e){
+    console.log("Add a new todo...")
 })
-const SummuaryMessage = document.createElement("p")
-SummuaryMessage.textContent = `You have ${incompleteTodos.length} todos left.`
-document.querySelector("body").appendChild(SummuaryMessage)
 
-todos.forEach(function(todo){
-    let newP = document.createElement("p")
-    newP.textContent = todo.text
-    document.querySelector("body").appendChild(newP)
+document.querySelector("#new-todo").addEventListener("input", function(e){
+    console.log(e.target.value)
+})
+
+// Filter todos
+document.querySelector("#filter-todo").addEventListener("input", function(e){
+    filters.searchText = e.target.value
+    renderTodos(todos, filters)
 })
