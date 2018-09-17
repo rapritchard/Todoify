@@ -33,7 +33,7 @@ const renderTodos = function(todos, filter){
     const incompleteTodos = filteredTodos.filter(function(todo){
         return !todo.completed
     })
-    
+
     const SummuaryMessage = document.createElement("h2")
     SummuaryMessage.textContent = `You have ${incompleteTodos.length} todos left.`
     document.querySelector("#todos").appendChild(SummuaryMessage)
@@ -48,17 +48,23 @@ const renderTodos = function(todos, filter){
 
 renderTodos(todos, filters)
 
-// Listen for new todo creation
-document.querySelector("#create-todo").addEventListener("click", function(e){
-    console.log("Add a new todo...")
-})
-
-document.querySelector("#new-todo").addEventListener("input", function(e){
-    console.log(e.target.value)
-})
-
 // Filter todos
 document.querySelector("#filter-todo").addEventListener("input", function(e){
     filters.searchText = e.target.value
     renderTodos(todos, filters)
+})
+
+// 1. Create a form with a single input for the todo text
+// 2. setup a submit handler and cancel the default action
+// 3. add a new item to the todos array with that text data (completed value of false)
+// 4. rerender the list
+document.querySelector("#todo-form").addEventListener("submit", function(e){
+    e.preventDefault()
+
+    todos.push({
+        text: e.target.elements.todoName.value,
+        completed: false
+    })
+    renderTodos(todos, filters)
+    e.target.elements.todoName.value = ""
 })
