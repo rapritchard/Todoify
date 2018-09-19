@@ -1,29 +1,14 @@
-const todos = [{
-    text: "Make breakfast",
-    completed: true
-}, {
-    text: "Put the towels in the washing machine",
-    completed: false
-}, {
-    text: "Walk the dog",
-    completed: true
-}, {
-    text: "Run the hoover around the house",
-    completed: false
-}, {
-    text: "Make lunch",
-    completed: false
-}]
-
-// 1. Setup div to contain todos
-// 2. Setup filters (searchText) and wire up a new filter input to change .
-// 3. Create a renderTodos function to render and rerender the latest filtered data
+let todos = []
 
 const filters = {
     searchText: "",
     hideCompleted: false
 }
 
+const todoJSON = localStorage.getItem("todos")
+if(todoJSON !== null){
+    todos = JSON.parse(todoJSON)
+}
 
 const renderTodos = function(todos, filter){
     const filteredTodos = todos.filter(function(todo){
@@ -64,10 +49,6 @@ document.querySelector("#filter-todo").addEventListener("input", function(e){
     renderTodos(todos, filters)
 })
 
-// 1. Create a form with a single input for the todo text
-// 2. setup a submit handler and cancel the default action
-// 3. add a new item to the todos array with that text data (completed value of false)
-// 4. rerender the list
 document.querySelector("#todo-form").addEventListener("submit", function(e){
     e.preventDefault()
 
@@ -75,14 +56,10 @@ document.querySelector("#todo-form").addEventListener("submit", function(e){
         text: e.target.elements.todoName.value,
         completed: false
     })
+    localStorage.setItem("todos", JSON.stringify(todos))
     renderTodos(todos, filters)
     e.target.elements.todoName.value = ""
 })
-
-// 1. Create a checkbox and setup event listener -> "Hide completed"
-// 2. Create new hideCompleted filter (default false)
-// 3 Update hideCompleted and rendeer list on checkbox change
-// 4. Setup renderTodos to remove completed items
 
 document.querySelector("#todo-checkbox").addEventListener("change", function(e){
     filters.hideCompleted = e.target.checked
