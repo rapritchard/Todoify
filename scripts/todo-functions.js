@@ -38,8 +38,20 @@ const renderTodos = function(todos, filter){
 
 // Get the DOM elements for a todo
 const generateTodoDOM = function(todo){
-    const todoElement = document.createElement("p")
-    todoElement.textContent = todo.text
+    const todoElement = document.createElement("div")
+    const textElement = document.createElement("span")
+    const checkboxElement = document.createElement("input")
+    const buttonElement = document.createElement("button")
+
+    checkboxElement.setAttribute("type", "checkbox")
+    todoElement.appendChild(checkboxElement)
+
+    textElement.textContent = todo.text
+    todoElement.appendChild(textElement)
+
+    buttonElement.textContent = "X"
+    todoElement.appendChild(buttonElement)
+
     return todoElement
 }
 
