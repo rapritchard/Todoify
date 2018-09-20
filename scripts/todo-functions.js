@@ -1,6 +1,7 @@
 // Fetch existing todos from localStorage
 const getTodos = function(){
     const todoJSON = localStorage.getItem("todos")
+
     if(todoJSON !== null){
         return JSON.parse(todoJSON)
     }else{
@@ -36,6 +37,17 @@ const renderTodos = function(todos, filter){
 
 }
 
+// Remove a todo from the list
+const removeTodo = function(id){
+    const todoID = todos.findIndex(function(todo){
+        return todo.id === id
+    })
+
+    if(todoID > -1){
+        todos.splice(todoID, 1)
+    }
+}
+
 // Get the DOM elements for a todo
 const generateTodoDOM = function(todo){
     const todoElement = document.createElement("div")
@@ -50,6 +62,11 @@ const generateTodoDOM = function(todo){
     todoElement.appendChild(textElement)
 
     buttonElement.textContent = "X"
+    buttonElement.addEventListener("click", function(e){
+        removeTodo(todo.id)
+        saveTodos(todos)
+        renderTodos(todos, filters)
+    })
     todoElement.appendChild(buttonElement)
 
     return todoElement
