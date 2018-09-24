@@ -8,12 +8,12 @@ const filters = {
 renderTodos(todos, filters)
 
 // Filter todos
-document.querySelector("#filter-todo").addEventListener("input", function(e){
+document.querySelector("#filter-todo").addEventListener("input", (e) => {
     filters.searchText = e.target.value
     renderTodos(todos, filters)
 })
 
-document.querySelector("#todo-form").addEventListener("submit", function(e){
+document.querySelector("#todo-form").addEventListener("submit", (e) => {
     e.preventDefault()
 
     todos.push({
@@ -28,7 +28,7 @@ document.querySelector("#todo-form").addEventListener("submit", function(e){
     e.target.elements.todoName.value = ""
 })
 
-document.querySelector("#todo-checkbox").addEventListener("change", function(e){
+document.querySelector("#todo-checkbox").addEventListener("change", (e) => {
     filters.hideCompleted = e.target.checked
     renderTodos(todos, filters)
 })
