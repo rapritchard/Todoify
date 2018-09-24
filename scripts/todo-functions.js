@@ -2,7 +2,11 @@
 const getTodos = () => {
     const todoJSON = localStorage.getItem("todos")
 
-    return todoJSON !== null ? JSON.parse(todoJSON) : []
+    try{
+        return todoJSON ? JSON.parse(todoJSON) : []
+    }catch(e){
+        return []
+    }
 }
 
 // Save todos to localStorage
@@ -44,7 +48,7 @@ const removeTodo = (id) => {
 const completeTodo = (id) => { 
     const todo = todos.find((todo) => todo.id === id)
     
-    if(todo !== undefined){
+    if(todo){
         todo.completed = !todo.completed
     }
 }
