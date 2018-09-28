@@ -18,16 +18,22 @@ document.querySelector("#filter-todo").addEventListener("input", (e) => {
 document.querySelector("#todo-form").addEventListener("submit", (e) => {
     e.preventDefault()
 
-    todos.push({
-        id: uuidv4(),
-        text: e.target.elements.todoName.value,
-        completed: false
-    })
-
-    saveTodos(todos)
-    renderTodos(todos, filters)
+    let text = e.target.elements.todoName.value.trim()
+    if(text.length > 0){
+        todos.push({
+            id: uuidv4(),
+            text,
+            completed: false
+        })
     
-    e.target.elements.todoName.value = ""
+        saveTodos(todos)
+        renderTodos(todos, filters)
+        
+        e.target.elements.todoName.value = ""
+    }else{
+        e.target.elements.todoName.value = ""
+    }
+
 })
 
 document.querySelector("#todo-checkbox").addEventListener("change", (e) => {

@@ -57,30 +57,38 @@ const completeTodo = (id) => {
 
 // Get the DOM elements for a todo
 const generateTodoDOM = (todo) => {
-    const todoElement = document.createElement("div")
+    const todoElement = document.createElement("label")
+    const divElement = document.createElement("div")
     const textElement = document.createElement("span")
     const checkboxElement = document.createElement("input")
     const buttonElement = document.createElement("button")
 
     checkboxElement.setAttribute("type", "checkbox")
     checkboxElement.checked = todo.completed
+    divElement.appendChild(checkboxElement)
     checkboxElement.addEventListener("change", (e) => {
         completeTodo(todo.id)
         saveTodos(todos)
         renderTodos(todos, filters)
     })
-    todoElement.appendChild(checkboxElement)
 
     textElement.textContent = todo.text
-    todoElement.appendChild(textElement)
+    divElement.appendChild(textElement)
 
-    buttonElement.textContent = "X"
+    // Setup container
+    todoElement.classList.add("list-item")
+    divElement.classList.add("list-item__container")
+    todoElement.appendChild(divElement)
+
+    buttonElement.textContent = "Remove"
+    buttonElement.classList.add("button", "button--text")
+    todoElement.appendChild(buttonElement)
     buttonElement.addEventListener("click", (e) => {
         removeTodo(todo.id)
         saveTodos(todos)
         renderTodos(todos, filters)
     })
-    todoElement.appendChild(buttonElement)
+
 
     return todoElement
 }
@@ -88,6 +96,10 @@ const generateTodoDOM = (todo) => {
 // Get the DOM elements for list summary
 const generateSummaryDOM = (incompleteTodos) => {
     const SummuaryMessage = document.createElement("h2")
-    SummuaryMessage.textContent = `You have ${incompleteTodos.length} todos left.`
+    SummuaryMessage.classList.add("list-title")
+    const plural = incompleteTodos.length === 1 ? "" : "s"
+    SummuaryMessage.textContent = `You have ${incompleteTodos.length} todo${plural} left.`
+ 
+
     return SummuaryMessage
 }
