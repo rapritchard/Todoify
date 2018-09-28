@@ -18,6 +18,7 @@ const saveTodos = (todos) => {
 
 // Render application todos based on current filters
 const renderTodos = (todos, filter) => {
+    const todoElement = document.querySelector("#todos")
     const filteredTodos = todos.filter((todo) => {
         const searchTextMatch = todo.text.toLowerCase().includes(filter.searchText.toLowerCase())
         const hideCompleteMatch = !filter.hideCompleted || !todo.completed
@@ -25,15 +26,21 @@ const renderTodos = (todos, filter) => {
         return searchTextMatch && hideCompleteMatch
     })
 
-    document.querySelector("#todos").innerHTML = ""
+    todoElement.innerHTML = ""
 
     const incompleteTodos = filteredTodos.filter((todo) => !todo.completed)
 
-    document.querySelector("#todos").appendChild(generateSummaryDOM(incompleteTodos))
-
-    filteredTodos.forEach((todo) => {
-        document.querySelector("#todos").appendChild(generateTodoDOM(todo))
-    })
+    todoElement.appendChild(generateSummaryDOM(incompleteTodos))
+    if(filteredTodos.length > 0){
+        filteredTodos.forEach((todo) => {
+            todoElement.appendChild(generateTodoDOM(todo))
+        })
+    }else{
+        const paragraph = document.createElement("p")
+        paragraph.classList.add("empty-message")
+        paragraph.textContent = "There are no todos!"
+        todoElement.appendChild(paragraph)
+    }
 
 }
 
