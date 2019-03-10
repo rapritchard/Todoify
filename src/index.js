@@ -1,8 +1,6 @@
-import { generateSummaryDOM, generateTodoDOM, renderTodos } from './views';
-import { setFilters, getFilters } from './filters';
-import {
-  loadTodos, getTodos, saveTodos, removeTodo, toggleTodo, createTodo,
-} from './todos';
+import { renderTodos } from './views';
+import { setFilters } from './filters';
+import { createTodo } from './todos';
 
 // Render Todos
 renderTodos();
@@ -14,7 +12,7 @@ document.querySelector('#filter-todo').addEventListener('input', (e) => {
 
 // Set up Checkbox Handler
 document.querySelector('#todo-checkbox').addEventListener('change', (e) => {
-  setFilters({hideCompleted: e.target.checked });
+  setFilters({ hideCompleted: e.target.checked });
   renderTodos();
 });
 
@@ -34,3 +32,8 @@ document.querySelector('#todo-form').addEventListener('submit', (e) => {
 });
 
 // add a watcher for local storage
+window.addEventListener('storage', (e) => {
+  if (e.key === 'todos') {
+    renderTodos();
+  }
+});
