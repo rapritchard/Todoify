@@ -1,15 +1,16 @@
 import { getFilters } from './filters';
-import { getTodos, toggleTodo, saveTodos, removeTodo } from './todos';
+import {
+  getTodos, toggleTodo, saveTodos, removeTodo,
+} from './todos';
 // renderTodos
 // Args: none
 // return: none
 
 const renderTodos = () => {
-  const todos = getTodos();
   const filters = getFilters();
   const todoElement = document.querySelector('#todos');
 
-  const filteredTodos = todos.filter((todo) => {
+  const filteredTodos = getTodos().filter((todo) => {
     const searchTextMatch = todo.text.toLowerCase().includes(filters.searchText.toLowerCase());
     const hideCompleteMatch = !filters.hideCompleted || !todo.completed;
 

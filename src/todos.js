@@ -10,7 +10,7 @@ const loadTodos = () => {
   try {
     todos = todoJSON ? JSON.parse(todoJSON) : [];
   } catch (e) {
-    todos = [];
+     todos = [];
   }
 };
 
@@ -65,7 +65,7 @@ const toggleTodo = (id) => {
 };
 
 // call loadTodos and export
-todos = loadTodos();
+loadTodos();
 
 export {
   loadTodos, getTodos, saveTodos, removeTodo, toggleTodo, createTodo
