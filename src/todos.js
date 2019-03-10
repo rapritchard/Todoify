@@ -8,9 +8,9 @@ const loadTodos = () => {
   const todoJSON = localStorage.getItem('todos');
 
   try {
-    return todoJSON ? JSON.parse(todoJSON) : [];
+    todos = todoJSON ? JSON.parse(todoJSON) : [];
   } catch (e) {
-    return [];
+    todos = [];
   }
 };
 
