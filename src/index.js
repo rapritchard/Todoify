@@ -1,6 +1,6 @@
 import { renderTodos } from './views';
 import { setFilters } from './filters';
-import { createTodo } from './todos';
+import { createTodo, loadTodos } from './todos';
 
 // Render Todos
 renderTodos();
@@ -34,6 +34,7 @@ document.querySelector('#todo-form').addEventListener('submit', (e) => {
 // add a watcher for local storage
 window.addEventListener('storage', (e) => {
   if (e.key === 'todos') {
+    loadTodos();
     renderTodos();
   }
 });
